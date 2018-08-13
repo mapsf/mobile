@@ -1,0 +1,12 @@
+.idea
+npm-debug.log
+*.js.map
+*.metadata.json
+app/**/*.js
+hooks/
+lib/
+node_modules/
+platforms/
+tmp/
+typings/
+references.d.ts
