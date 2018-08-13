@@ -1,7 +1,7 @@
-##NativeScript Angular 5 application
+## NativeScript Angular 5 application
 
 ### Pre-requirements
-- install tns...
+- [install NativeScript CLI](https://www.npmjs.com/package/nativescript)
 
 ### Development
 
