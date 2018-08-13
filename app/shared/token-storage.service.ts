@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import "nativescript-localstorage"
+import * as localStorage from 'nativescript-localstorage';
 
 @Injectable()
 export class TokenStorageService {

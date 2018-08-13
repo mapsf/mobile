@@ -12,8 +12,8 @@ import {UserService} from "~/shared/user.service";
     templateUrl: "./login.component.html",
     styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
-    isLoggingIn = true;
     user: User;
     processing = false;
     @ViewChild("password") password: ElementRef;
@@ -24,11 +24,6 @@ export class LoginComponent {
         this.user = new User();
         this.user.login = "alexandr";
         this.user.password = "1";
-        // this.processing = true;
-    }
-
-    toggleForm() {
-        this.isLoggingIn = !this.isLoggingIn;
     }
 
     submit() {
@@ -37,51 +32,49 @@ export class LoginComponent {
             return;
         }
 
-        this.processing = true;
         this.login();
     }
 
     login() {
+        this.processing = true;
         this.userService.login(this.user)
             .then(() => {
                 this.processing = false;
                 this.router.navigate(["/home"]);
             })
             .catch((err) => {
-                alert(err.message);
+                alert(err.toString());
                 this.processing = false;
                 this.alert("Unfortunately we could not find your account.");
             });
     }
 
-    forgotPassword() {
-        prompt({
-            title: "Forgot Password",
-            message: "Enter the email address you used to register for APP NAME to reset your password.",
-            inputType: "email",
-            defaultText: "",
-            okButtonText: "Ok",
-            cancelButtonText: "Cancel"
-        }).then((data) => {
-            if (data.result) {
-                this.userService.resetPassword(data.text.trim())
-                    .then(() => {
-                        this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
-                    }).catch(() => {
-                    this.alert("Unfortunately, an error occurred resetting your password.");
-                });
-            }
-        });
-    }
+    // forgotPassword() {
+    //     prompt({
+    //         title: "Forgot Password",
+    //         message: "Enter the email address you used to register for APP NAME to reset your password.",
+    //         inputType: "email",
+    //         defaultText: "",
+    //         okButtonText: "Ok",
+    //         cancelButtonText: "Cancel"
+    //     }).then((data) => {
+    //         if (data.result) {
+    //             this.userService.resetPassword(data.text.trim())
+    //                 .then(() => {
+    //                     this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+    //                 }).catch(() => {
+    //                 this.alert("Unfortunately, an error occurred resetting your password.");
+    //             });
+    //         }
+    //     });
+    // }
 
     focusPassword() {
         this.password.nativeElement.focus();
     }
 
     focusConfirmPassword() {
-        if (!this.isLoggingIn) {
-            this.confirmPassword.nativeElement.focus();
-        }
+        this.confirmPassword.nativeElement.focus();
     }
 
     alert(message: string) {

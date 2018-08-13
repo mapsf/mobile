@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {TokenStorageService} from "~/shared/token-storage.service";
+import config from './../config'
 
 @Injectable()
 export class ApiService {
 
-    private apiServer = "http://api.mapsf.local";
+    private apiServer = config.apiServer;
 
     constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
     }
@@ -26,10 +27,17 @@ export class ApiService {
         })
     }
 
-    private createRequestHeaders(): HttpHeaders {
-        return new HttpHeaders({
-            "Authorization": this.tokenStorage.get(),
+    private createRequestHeaders() {
+
+        const headers = {
             "Content-Type": "application/json",
-        });
+        };
+
+        const token = this.tokenStorage.get();
+        if (token) {
+            headers['Authorization'] = token;
+        }
+
+        return headers;
     }
 }

@@ -1,2 +1,19 @@
 <ActionBar title="YOUR APP"></ActionBar>
-<Label class="body m-20" [text]="message" textWrap="true"></Label>
+<StackLayout>
+    <ContentView height="100%" width="100%">
+        <Mapbox
+                [accessToken]="accessToken"
+                mapStyle="traffic_day"
+                [latitude]="location.latitude"
+                [longitude]="location.longitude"
+                hideCompass="true"
+                zoomLevel="18"
+                showUserLocation="true"
+                disableZoom="false"
+                disableRotation="false"
+                disableScroll="false"
+                disableTilt="false"
+                (mapReady)="onMapReady($event)">
+        </Mapbox>
+    </ContentView>
+</StackLayout>

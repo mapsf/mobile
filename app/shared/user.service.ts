@@ -15,16 +15,10 @@ export class UserService {
                 console.log(res);
                 resolve(res);
             }, err => {
-                console.log(err);
+                console.log(err.stack);
                 this.handleErrors(err);
                 reject(err);
             });
-        });
-    }
-
-    resetPassword(email) {
-        return new Promise((resolve, reject) => {
-            resolve();
         });
     }
 
