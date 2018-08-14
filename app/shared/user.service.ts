@@ -14,10 +14,9 @@ export class UserService {
             this.api.login(user.login, user.password).subscribe(res => {
                 console.log(res);
                 resolve(res);
-            }, err => {
-                console.log(err.stack);
+            }, (err) => {
                 this.handleErrors(err);
-                reject(err);
+                reject(err.message);
             });
         });
     }

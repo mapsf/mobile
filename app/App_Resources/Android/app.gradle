@@ -5,14 +5,14 @@
 //	compile 'com.android.support:recyclerview-v7:+'
 //}
 
-android {  
+android {
   defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.blankng"  
+    applicationId = "org.nativescript.blankng"
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  
-  }  
+  }
 } 
 
 def settingsGradlePath
