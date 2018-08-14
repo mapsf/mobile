@@ -1,11 +1,10 @@
 import {Component, OnInit} from "@angular/core";
-import {TokenStorageService} from "~/shared/token-storage.service";
 
-import {registerElement} from "nativescript-angular/element-registry";
 import config from './../config'
 import {Location} from "nativescript-geolocation/location";
-import * as geolocation from "nativescript-geolocation";
-import {Accuracy} from "tns-core-modules/ui/enums";
+import {GeoLocationService} from "~/shared/geo-location.service";
+
+import {registerElement} from "nativescript-angular/element-registry";
 
 registerElement("Mapbox", () => require("nativescript-mapbox").MapboxView);
 
@@ -23,35 +22,22 @@ export class HomeComponent implements OnInit {
         longitude: 0,
     };
 
-    constructor(public tokenStorage: TokenStorageService) {
+    constructor(private geoLocation: GeoLocationService) {
     }
 
     ngOnInit(): void {
-        geolocation.enableLocationRequest().then(() => {
-            geolocation.getCurrentLocation({
-                desiredAccuracy: Accuracy.high,
-                maximumAge: 5000,
-                timeout: 2500,
-                updateTime: 1000,
-            })
-                .then((location: Location) => {
-                    this.location.latitude = location.latitude;
-                    this.location.longitude = location.longitude;
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-            const watchId = geolocation.watchLocation((location: Location) => {
+        this.geoLocation.enableLocationTap()
+            .then((location: Location) => {
                 console.log(location);
-            }, (error: Error) => {
-                console.log(error);
-            }, {});
-        }).catch(() => {
-            alert('жаль');
-        });
+                this.location.latitude = location.latitude;
+                this.location.longitude = location.longitude;
+            })
+            .catch((err) => {
+                alert(err.message);
+            });
     }
 
     onMapReady() {
-        alert('ready!');
+
     }
 }

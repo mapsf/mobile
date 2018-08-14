@@ -10,6 +10,7 @@ import {LoginComponent} from "./login/login.component";
 import {UserService} from "./shared/user.service";
 import {ApiService} from "~/shared/api.service";
 import {TokenStorageService} from "~/shared/token-storage.service";
+import {GeoLocationService} from "~/shared/geo-location.service";
 
 @NgModule({
     bootstrap: [
@@ -29,6 +30,7 @@ import {TokenStorageService} from "~/shared/token-storage.service";
         UserService,
         ApiService,
         TokenStorageService,
+        GeoLocationService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
