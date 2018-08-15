@@ -1,10 +1,12 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
 import {alert, prompt} from "tns-core-modules/ui/dialogs";
 import {Page} from "tns-core-modules/ui/page";
 
 import {User} from "~/shared/user.model";
 import {UserService} from "~/shared/user.service";
+import {AuthTokenService} from "~/shared/auth-token.service";
+import {AuthError, AuthSuccess} from "~/common/responses/auth";
 
 @Component({
     selector: "app-login",
@@ -13,17 +15,28 @@ import {UserService} from "~/shared/user.service";
     styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
     user: User;
     processing = false;
+
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
-    constructor(private page: Page, private userService: UserService, private router: Router) {
+    constructor(private page: Page, private userService: UserService, private router: Router, private authToken: AuthTokenService) {
+
+        if (this.authToken.has()) {
+            this.goHome();
+        }
+
         this.page.actionBarHidden = true;
         this.user = new User();
         this.user.login = "alexandr";
         this.user.password = "1";
+    }
+
+    ngOnInit(): void {
+
     }
 
     submit() {
@@ -38,36 +51,17 @@ export class LoginComponent {
     login() {
         this.processing = true;
         this.userService.login(this.user)
-            .then(() => {
+            .then((res: AuthSuccess) => {
+                this.authToken.set(res.token);
                 this.processing = false;
-                this.router.navigate(["/home"]);
+                this.goHome();
             })
-            .catch((err) => {
-                alert(err.toString());
+            .catch((err: AuthError) => {
                 this.processing = false;
+                alert(err.message);
                 this.alert("Unfortunately we could not find your account.");
             });
     }
-
-    // forgotPassword() {
-    //     prompt({
-    //         title: "Forgot Password",
-    //         message: "Enter the email address you used to register for APP NAME to reset your password.",
-    //         inputType: "email",
-    //         defaultText: "",
-    //         okButtonText: "Ok",
-    //         cancelButtonText: "Cancel"
-    //     }).then((data) => {
-    //         if (data.result) {
-    //             this.userService.resetPassword(data.text.trim())
-    //                 .then(() => {
-    //                     this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
-    //                 }).catch(() => {
-    //                 this.alert("Unfortunately, an error occurred resetting your password.");
-    //             });
-    //         }
-    //     });
-    // }
 
     focusPassword() {
         this.password.nativeElement.focus();
@@ -84,5 +78,8 @@ export class LoginComponent {
             message: message
         });
     }
-}
 
+    private goHome(): void {
+        this.router.navigate(["/home"]);
+    }
+}

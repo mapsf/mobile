@@ -3,6 +3,11 @@ import {platformNativeScriptDynamic} from "nativescript-angular/platform";
 import {enableProdMode} from '@angular/core';
 
 import {AppModule} from "./app.module";
+import {AppOptions} from "nativescript-angular/platform-common";
 
-enableProdMode();
-platformNativeScriptDynamic().bootstrapModule(AppModule);
+const appOptions: AppOptions = {
+    startPageActionBarHidden: true,
+};
+
+// enableProdMode();
+platformNativeScriptDynamic(appOptions).bootstrapModule(AppModule);

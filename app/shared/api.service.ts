@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {TokenStorageService} from "~/shared/token-storage.service";
+import {AuthTokenService} from "~/shared/auth-token.service";
 import config from './../config'
 
 @Injectable()
@@ -8,7 +8,7 @@ export class ApiService {
 
     private apiServer = config.apiServer;
 
-    constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+    constructor(private http: HttpClient, private tokenStorage: AuthTokenService) {
     }
 
     public ping() {

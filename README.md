@@ -7,5 +7,5 @@
 
 - run on android (on real device if connected or emulator otherwise)
 ```
-tns run android
+npm run dev
 ```
