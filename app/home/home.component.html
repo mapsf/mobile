@@ -1,19 +1,25 @@
-<StackLayout>
-    <ContentView height="100%" width="100%">
-        <Mapbox
-                #map
-                [accessToken]="mapOptions.accessToken"
-                [mapStyle]="mapOptions.style"
-                [latitude]="mapOptions.location.latitude"
-                [longitude]="mapOptions.location.longitude"
-                hideCompass="false"
-                [zoomLevel]="mapOptions.zoomLevel"
-                showUserLocation="false"
-                disableZoom="false"
-                disableRotation="false"
-                disableScroll="false"
-                disableTilt="false"
-                (mapReady)="onMapReady($event)">
-        </Mapbox>
-    </ContentView>
-</StackLayout>
+<GridLayout rows="*, *">
+    <StackLayout>
+        <ContentView height="100%" width="100%">
+            <Mapbox
+                    #map
+                    [accessToken]="mapOptions.accessToken"
+                    [mapStyle]="mapOptions.style"
+                    [latitude]="mapOptions.location.latitude"
+                    [longitude]="mapOptions.location.longitude"
+                    hideCompass="true"
+                    [zoomLevel]="mapOptions.zoomLevel"
+                    showUserLocation="false"
+                    disableZoom="false"
+                    disableRotation="true"
+                    disableScroll="false"
+                    disableTilt="false"
+                    (mapReady)="onMapReady($event)">
+            </Mapbox>
+        </ContentView>
+    </StackLayout>
+    <AbsoluteLayout row="0">
+        <Button text="Где я?" (tap)="whereAmI()"></Button>
+        <Button text="ws" (tap)="wsc()"></Button>
+    </AbsoluteLayout>
+</GridLayout>

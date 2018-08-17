@@ -15,8 +15,8 @@ export class GeoLocationService {
     };
 
     private watchOptions: Options = {
-        desiredAccuracy: 3,
-        updateDistance: 10,
+        desiredAccuracy: Accuracy.high,
+        updateDistance: 1,
         minimumUpdateTime: 1000 * 20, // Should update every 20 seconds according to Googe documentation. Not verified.
     };
 
